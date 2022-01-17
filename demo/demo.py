@@ -105,6 +105,7 @@ def run(data_list):
 
 if __name__ == '__main__':
     data_list = RpaHandler.readExcel()
+    print(len(data_list))
     run(data_list)
     RpaHandler.renameFile()
 

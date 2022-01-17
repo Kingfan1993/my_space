@@ -38,6 +38,10 @@ def renameFile():
     else:
         print("文件数量不正确")
 
+if __name__ == '__main__':
+    file_list = os.listdir(path)
+    print(len(file_list))
+
 
 
 
