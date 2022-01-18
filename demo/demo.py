@@ -42,7 +42,7 @@ def run(data_list):
     data_list_copy = copy.deepcopy(data_list)
     flag = True
     for index, row in enumerate(data_list):
-        logger.debug("当前处理的保单号:" + row + "-开始")
+        logger.debug("当前处理的保单号:" + row + "-开始,"+"还剩余"+str(len(data_list_copy))+"个保单号处理")
         # 开始录取
         k.press_key(k.function_keys[6])
         start = time.time()
@@ -109,8 +109,6 @@ def run(data_list):
             driver.switch_to.window(driver.window_handles[0])
             time.sleep(1)
 
-            if str(row) == "21509211000021002533":
-                raise Exception("执行错误")
 
         except Exception as e:
             logger.error(e)
@@ -171,6 +169,6 @@ if __name__ == '__main__':
 
         end_date_time = (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     finally:
-        logger.debug("项目结束时间:" + current_date_time)
+        logger.debug("项目结束时间:" + time.strftime("%Y_%m_%d %H_%M_%S", time.localtime()))
 
 
