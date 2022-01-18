@@ -1,25 +1,37 @@
+import copy
+
 import xlrd
 import os
 from openpyxl import load_workbook
+import os.path
+
+my_path = os.path.abspath(os.path.dirname(__file__))
+
+excel_path = os.path.join(my_path, '保单号.xlsx')
+
+data_list_path = os.path.join(my_path, 'bx_list.json')
+
+import json
+
+path = "D:\FFOutput\屏幕录像"
 
 
 def readExcel():
-    wb = load_workbook('D:\IdeaProjects\my_space\demo\保单号.xlsx')
-    sheets = wb.worksheets
-    sheet1 = sheets[0]
-    max_rows = sheet1.max_row
+    if not os.path.exists(data_list_path):
+        wb = load_workbook(excel_path)
+        sheets = wb.worksheets
+        sheet1 = sheets[0]
+        max_rows = sheet1.max_row
 
-    res = []
+        res = []
 
-    for row in range(2, max_rows + 1):
-        var1 = sheet1.cell(row, 1).value
-        var2 = sheet1.cell(row, 2).value
-        res.append([var1, var2])
-
-    return res
-
-
-path = "E:\FFOutput\屏幕录像"
+        for row in range(2, max_rows + 1):
+            var1 = sheet1.cell(row, 1).value
+            res.append(var1)
+        write_json(res)
+        return res
+    else:
+        return read_json()
 
 
 def renameFile():
@@ -38,11 +50,18 @@ def renameFile():
     else:
         print("文件数量不正确")
 
+
+def write_json(jlist):
+    # 将bx列表写入json文件
+    with open('bx_list.json', 'w') as f_obj:
+        json.dump(jlist, f_obj)
+
+
+def read_json():
+    # 读取存储于json文件中的列表
+    with open('bx_list.json', 'r') as f_obj:
+        jlist = json.load(f_obj)
+        return jlist
+
 if __name__ == '__main__':
-    file_list = os.listdir(path)
-    print(len(file_list))
-
-
-
-
-
+    readExcel()
